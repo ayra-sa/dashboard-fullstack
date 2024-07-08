@@ -1,11 +1,15 @@
 import express from "express";
+import { createUser, deleteUser, getUserById, getUsers, updateUser } from "../controllers/Users.js";
+import { adminOnly, verifyUser } from "../middleware/AuthUser.js";
+
 
 const router = express.Router();
 
-router.get("/users");
-router.get("/users/:id");
-router.post("/users");
-router.patch("/users/:id");
-router.delete("/users/:id");
+// can't access user if not login
+router.get("/users", verifyUser, adminOnly, getUsers);
+router.get("/users/:id", verifyUser, adminOnly, getUserById);
+router.post("/users", verifyUser, adminOnly, createUser);
+router.patch("/users/:id", verifyUser, adminOnly, updateUser);
+router.delete("/users/:id", verifyUser, adminOnly, deleteUser);
 
 export default router;

@@ -1,7 +1,7 @@
 import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
-export const getUsers = async (res, req) => {
+export const getUsers = async (req, res) => {
   try {
     const response = await User.findAll({
       attributes: ["uuid", "name", "email", "role"],
@@ -12,7 +12,7 @@ export const getUsers = async (res, req) => {
   }
 };
 
-export const getUserById = async (res, req) => {
+export const getUserById = async (req, res) => {
   try {
     const response = await User.findOne({
       attributes: ["uuid", "name", "email", "role"],
@@ -26,7 +26,7 @@ export const getUserById = async (res, req) => {
   }
 };
 
-export const createUser = async (res, req) => {
+export const createUser = async (req, res) => {
   const { name, password, confirmPassword, role, email } = req.body;
 
   if (password !== confirmPassword)
@@ -47,7 +47,7 @@ export const createUser = async (res, req) => {
   }
 };
 
-export const updateUser = async (res, req) => {
+export const updateUser = async (req, res) => {
   const user = await User.findOne({
     where: {
       uuid: req.params.id,
@@ -86,7 +86,7 @@ export const updateUser = async (res, req) => {
   }
 };
 
-export const deleteUser = async (res, req) => {
+export const deleteUser = async (req, res) => {
   const user = await User.findOne({
     where: {
       uuid: req.params.id,

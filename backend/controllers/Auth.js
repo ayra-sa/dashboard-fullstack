@@ -1,4 +1,4 @@
-import User from "../models/UserModel";
+import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
 export const login = async (req, res) => {
@@ -23,8 +23,8 @@ export const me = async (req, res) => {
     return res.status(401).json({ msg: "Please login to your account" });
   }
   const user = await User.findOne({
+    attributes: ["uuid", "name", "email", "role"],
     where: {
-      attribute: ["uuid", "name", "email", "role"],
       uuid: req.session.userId, //session
     },
   });
