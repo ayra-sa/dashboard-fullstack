@@ -18,7 +18,7 @@ export const login = async (req, res) => {
   res.status(200).json({ uuid, name, email, role });
 };
 
-export const Me = async (req, res) => {
+export const me = async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ msg: "Please login to your account" });
   }
