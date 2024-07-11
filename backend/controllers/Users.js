@@ -48,25 +48,30 @@ export const createUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const user = await User.findOne({
-    where: {
-      uuid: req.params.id,
-    },
-  });
-  if (!user) return res.status(404).json({ msg: "User not found" });
-
-  const { name, password, confirmPassword, role, email } = req.body;
-  let hashPassword;
-  if (password === "" || password === null) {
-    hashPassword = user.password;
-  } else {
-    hashPassword = await argon2.hash(password);
-  }
-  if (password !== confirmPassword)
-    return res
-      .status(400)
-      .json({ msg: "Password and Confirm Password does not match" });
   try {
+    const user = await User.findOne({
+      where: {
+        uuid: req.params.id,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    const { name, password, confirmPassword, role, email } = req.body;
+
+    // Validate passwords
+    if (password && password !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ msg: "Password and Confirm Password do not match" });
+    }
+
+    // Hash the password if it has been changed
+    const hashPassword = password ? await argon2.hash(password) : user.password;
+
+    // Update user data
     await User.update(
       {
         name,
@@ -80,9 +85,10 @@ export const updateUser = async (req, res) => {
         },
       }
     );
-    res.status(201).json({ msg: "User updated" });
+
+    res.status(200).json({ msg: "User updated successfully" });
   } catch (error) {
-    res.status(400).json({ msg: error.message });
+    res.status(500).json({ msg: error.message });
   }
 };
 
