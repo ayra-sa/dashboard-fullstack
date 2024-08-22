@@ -8,15 +8,14 @@ import ProductRoute from "./routes/ProductRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import SequelizeStore from "connect-session-sequelize";
 
-
 dotenv.config();
 const app = express();
 
-const sessionStore = SequelizeStore(session.Store)
+const sessionStore = SequelizeStore(session.Store);
 
 const store = new sessionStore({
-  db
-})
+  db,
+});
 
 // create table at database
 // (async () => {
@@ -40,8 +39,8 @@ app.use(
 
 app.use(
   cors({
-    credential: true,
-    origin: "http://localhost:3000",
+    credentials: true,
+    origin: "http://localhost:5173",
   })
 );
 
