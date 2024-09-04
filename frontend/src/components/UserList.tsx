@@ -28,7 +28,7 @@ const UserList = (props: Props) => {
     }
   };
 
-  const deleteUser = async (id) => {
+  const deleteUser = async (id: string) => {
     try {
       await axios.delete(`http://localhost:5000/users/${id}`);
       setUsers((prevUsers) => prevUsers.filter((user) => user.uuid !== id));
@@ -45,13 +45,10 @@ const UserList = (props: Props) => {
     <div>
       <h1 className="text-4xl mb-10">User</h1>
 
-      <button
-        className="bg-blue-500 px-5 py-2 rounded-md text-white font-semibold mb-5"
-        onClick={() => navigate("add")}
-      >
+      <Button variant="primary" onClick={() => navigate("add")}>
         Add user
-      </button>
-      <h2>List of Users</h2>
+      </Button>
+      <h2 className="mt-4">List of Users</h2>
       <p>{error ? error : null}</p>
 
       <table className="w-full border border-slate-200 mt-3">
@@ -75,7 +72,12 @@ const UserList = (props: Props) => {
               <th className={thTbodyClass}>{user.role}</th>
               <th className={thTbodyClass}>
                 <div className="inline-flex items-center gap-x-2">
-                  <Button variant="primary" onClick={() => navigate(`edit/${user.uuid}`)}>Edit</Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => navigate(`edit/${user.uuid}`)}
+                  >
+                    Edit
+                  </Button>
                   <Button
                     variant="secondary"
                     onClick={() => deleteUser(user.uuid)}

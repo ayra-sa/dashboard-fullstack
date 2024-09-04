@@ -66,7 +66,7 @@ const EditUser = () => {
   };
   return (
     <Layout>
-      <h2>asasas</h2>
+      <h2>Edit User</h2>
       <form action="" className="space-y-3" onSubmit={updateUser}>
         <InputField
           id="name"

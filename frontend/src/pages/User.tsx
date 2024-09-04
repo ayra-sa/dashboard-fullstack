@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Layout from "./Layout";
 import { useDispatch } from "react-redux";
 import { getMe } from "../features/authSlice";
 import UserList from "../components/UserList";
 
-type Props = {};
-
-const User = (props: Props) => {
+const User = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
